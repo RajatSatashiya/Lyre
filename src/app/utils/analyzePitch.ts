@@ -69,9 +69,16 @@ export const analyzePitch = async (
   }
 };
 
+// Define the type for valid string keys
+type GuitarString = keyof typeof STANDARD_TUNING;
+
 // Function to check tuning status
-const checkTuning = (detectedPitch: number, selectedString: string): string => {
-  const diff = detectedPitch - STANDARD_TUNING[selectedString];
+const checkTuning = (
+  detectedPitch: number,
+  selectedString: string | null
+): string => {
+  const stringKey = selectedString as GuitarString;
+  const diff = detectedPitch - STANDARD_TUNING[stringKey];
   const absDiff = Math.abs(diff);
   const tolerance = 2; // Allow small deviation
 
