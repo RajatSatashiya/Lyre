@@ -13,6 +13,8 @@ export const analyzePitch = async (
   stream: MediaStream,
   setTuningStatus: (status: string) => void,
   audioContext: AudioContext,
+  selectedStringRef: React.RefObject<string>,
+  stopTuning: () => void
 ) => {
   try {
     // Create analyserNode
@@ -42,7 +44,12 @@ export const analyzePitch = async (
         const [pitch] = detector.findPitch(input, audioContext.sampleRate);
 
         if (pitch > 0) {
-          setTuningStatus(checkTuning(pitch));
+          const data = checkTuning(pitch, selectedStringRef.current);
+          setTuningStatus(data);
+          if (data === "Tuned") {
+            stopTuning();
+            return cancelAnimationFrame(animationFrameId);
+          }
         }
       } else {
         // Guitar is not playing
@@ -63,8 +70,8 @@ export const analyzePitch = async (
 };
 
 // Function to check tuning status
-const checkTuning = (detectedPitch: number): string => {
-  const diff = detectedPitch - STANDARD_TUNING.E4;
+const checkTuning = (detectedPitch: number, selectedString: string): string => {
+  const diff = detectedPitch - STANDARD_TUNING[selectedString];
   const absDiff = Math.abs(diff);
   const tolerance = 2; // Allow small deviation
 

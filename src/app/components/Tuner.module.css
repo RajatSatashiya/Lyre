@@ -1,0 +1,23 @@
+.stringContainer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.stringBox {
+  padding: 1rem 1rem;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #5d0fc0;
+  color: #a683ff;
+}
+
+.inactive {
+  background-color: #a3004c;
+  color: #fb64b6;
+}

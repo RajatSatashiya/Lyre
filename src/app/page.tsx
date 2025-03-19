@@ -7,8 +7,6 @@ export default function Home() {
   return (
     <>
       <Tuner />
-      <div>Detecting for E thin string</div>
-      {/* <ReferenceTones /> */}
     </>
   );
 }
